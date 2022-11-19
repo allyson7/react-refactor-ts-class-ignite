@@ -13,9 +13,15 @@ type FoodProps = {
     available: boolean;
     image: string;
   };
+  handleEditFood: () => void;
+  handleDeleteFood: (string: string) => void;
 };
 
-export default function Food({ food }: FoodProps) {
+export default function Food({
+  food,
+  handleEditFood,
+  handleDeleteFood,
+}: FoodProps) {
   // constructor(props) {
   //   super(props);
 
@@ -70,7 +76,7 @@ export default function Food({ food }: FoodProps) {
           <button
             type="button"
             className="icon"
-            // onClick={() => handleDelete(food.id)}
+            onClick={() => handleDeleteFood(food.id)}
             data-testid={`remove-food-${food.id}`}
           >
             <FiTrash size={20} />
