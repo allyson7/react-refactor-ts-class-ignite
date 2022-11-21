@@ -8,8 +8,6 @@ interface HeaderProps {
 }
 
 export function Header({ openModal }: HeaderProps) {
-  // const { openModal } = this.props;
-
   return (
     <Container>
       <header>

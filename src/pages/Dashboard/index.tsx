@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, useState } from "react";
 
 import { Header } from "../../components/Header";
 import api from "../../services/api";
@@ -41,24 +41,24 @@ export function Dashboard() {
   //   }
   // };
 
-  // handleUpdateFood = async (food) => {
-  //   const { foods, editingFood } = this.state;
+  async function handleUpdateFood(food) {
+    const { foods, editingFood } = this.state;
 
-  //   try {
-  //     const foodUpdated = await api.put(`/foods/${editingFood.id}`, {
-  //       ...editingFood,
-  //       ...food,
-  //     });
+    try {
+      const foodUpdated = await api.put(`/foods/${editingFood.id}`, {
+        ...editingFood,
+        ...food,
+      });
 
-  //     const foodsUpdated = foods.map((f) =>
-  //       f.id !== foodUpdated.data.id ? f : foodUpdated.data
-  //     );
+      const foodsUpdated = foods.map((f) =>
+        f.id !== foodUpdated.data.id ? f : foodUpdated.data
+      );
 
-  //     this.setState({ foods: foodsUpdated });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+      this.setState({ foods: foodsUpdated });
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   // handleDeleteFood = async (id) => {
   //   const { foods } = this.state;
@@ -70,17 +70,15 @@ export function Dashboard() {
   //   this.setState({ foods: foodsFiltered });
   // };
 
-  toggleModal = () => {
-    const { modalOpen } = this.state;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  function toggleModal() {
+    setIsModalOpen(!isModalOpen);
+  }
 
-    this.setState({ modalOpen: !modalOpen });
-  };
-
-  // toggleEditModal = () => {
-  //   const { editModalOpen } = this.state;
-
-  //   this.setState({ editModalOpen: !editModalOpen });
-  // };
+  function toggleEditModal() {
+    setIsEditModalOpen(!isEditModalOpen);
+  }
 
   // handleEditFood = (food) => {
   //   this.setState({ editingFood: food, editModalOpen: true });
@@ -92,13 +90,13 @@ export function Dashboard() {
     <>
       <Header openModal={toggleModal} />
       <ModalAddFood
-        isOpen={modalOpen}
-        setIsOpen={this.toggleModal}
+        isOpen={isModalOpen}
+        setIsOpen={toggleModal}
         handleAddFood={this.handleAddFood}
       />
       <ModalEditFood
-        isOpen={editModalOpen}
-        setIsOpen={this.toggleEditModal}
+        isOpen={isEditModalOpen}
+        setIsOpen={toggleEditModal}
         editingFood={editingFood}
         handleUpdateFood={this.handleUpdateFood}
       />

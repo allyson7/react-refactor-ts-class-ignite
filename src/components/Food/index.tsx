@@ -4,51 +4,37 @@ import { FiEdit3, FiTrash } from "react-icons/fi";
 import { Container } from "./styles";
 import api from "../../services/api";
 
-type FoodProps = {
-  food: {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    available: boolean;
-    image: string;
-  };
-  handleEditFood: () => void;
-  handleDeleteFood: (string: string) => void;
-};
+interface FoodObjProps {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  available: boolean;
+  image: string;
+}
 
-export default function Food({
-  food,
-  handleEditFood,
-  handleDeleteFood,
-}: FoodProps) {
-  // constructor(props) {
-  //   super(props);
+interface FoodProps {
+  food: FoodObjProps;
+  handleEditFood: (food: FoodObjProps) => void;
+  handleDeleteFood: (id: number) => void;
+}
 
-  //   const { available } = this.props.food;
-  //   this.state = {
-  //     isAvailable: available
-  //   };
-  // }
-  const [isAvailable, setIsAvailable] = useState(true);
+export function Food({ food, handleEditFood, handleDeleteFood }: FoodProps) {
+  const { available } = food;
+  const [isAvailable, setIsAvailable] = useState(available);
 
-  async function toggleAvailable() {
-    // const { food } = this.props;
-
+  const toggleAvailable = async () => {
     await api.put(`/foods/${food.id}`, {
       ...food,
       available: !isAvailable,
     });
 
     setIsAvailable(!isAvailable);
-  }
+  };
 
-  function setEditingFood() {
-    // const { food, handleEditFood } = this.props;
-    // handleEditFood(food);
-  }
-
-  // const { food, handleDelete } = this.props;
+  const setEditingFood = () => {
+    handleEditFood(food);
+  };
 
   return (
     <Container available={isAvailable}>
