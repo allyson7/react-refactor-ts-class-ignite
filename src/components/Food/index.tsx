@@ -4,7 +4,7 @@ import { FiEdit3, FiTrash } from "react-icons/fi";
 import { Container } from "./styles";
 import api from "../../services/api";
 
-interface FoodObjProps {
+export interface FoodObjProps {
   id: number;
   name: string;
   description: string;
